@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PSH</string>
+
+    <string name="button1msg">hello earth</string>
 </resources>
