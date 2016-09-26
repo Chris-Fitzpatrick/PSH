@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 String firstString = "Hello Galaxy!";
                 String secondString = "hellow orld";
 
-                setContentView(R.layout.view1);
+                setContentView(R.layout.activity_maps);
             }
         });
 
