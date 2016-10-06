@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1027019174122",
+    "firebase_url": "https://projectstudenthousing.firebaseio.com",
+    "project_id": "projectstudenthousing",
+    "storage_bucket": "projectstudenthousing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027019174122:android:19b6425bead284c1",
+        "android_client_info": {
+          "package_name": "com.lunaandchris.projstudenthousing.psh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027019174122-pcs82p9nnll0nm8rvpgistrc2pjbn4ao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATvgHgVswRTGTOjdiJ4Pi3Q5ChfGUdyqo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
