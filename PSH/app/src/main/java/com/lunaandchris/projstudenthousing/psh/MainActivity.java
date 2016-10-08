@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("onCreate main", "Very beggining of the app");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         int count = 0;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
        // myRef.setValue("Hello, World! 3");
         String message = countRef.toString();
-        Log.d("oncreate", message);
+        Log.d("end of oncreate", message);
     }
 
 }
