@@ -21,7 +21,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("MapsActivity", "onCreate triggered");
-        System.out.println("onMapReady triggered");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);

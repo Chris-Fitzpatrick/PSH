@@ -1,5 +1,6 @@
 package com.lunaandchris.projstudenthousing.psh;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -35,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
                 String firstString = "Hello Galaxy!";
                 String secondString = "hellow orld";
 
-                setContentView(R.layout.activity_maps);
+                Intent goToMapIntent = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(goToMapIntent);
+                //setContentView(R.layout.activity_maps);
             }
         });
 
