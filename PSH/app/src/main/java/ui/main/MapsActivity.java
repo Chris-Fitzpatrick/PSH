@@ -1,4 +1,4 @@
-package com.lunaandchris.projstudenthousing.psh;
+package ui.main;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import ui.main.R;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {

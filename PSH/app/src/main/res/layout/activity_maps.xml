@@ -5,7 +5,7 @@
     android:name="com.google.android.gms.maps.MapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.lunaandchris.projstudenthousing.psh.MapsActivity"
+    tools:context="com.lunaandchris.projstudenthousing.psh.ui.main.MapsActivity"
     map:cameraTargetLat="42.4075"
     map:cameraTargetLng="-71.1190"
     map:cameraZoom="13"

@@ -1,4 +1,4 @@
-package com.lunaandchris.projstudenthousing.psh;
+package ui.main;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import ui.main.R;
 
 public class MainActivity extends AppCompatActivity {
 
