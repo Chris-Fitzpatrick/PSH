@@ -39,30 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent goToMapIntent = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(goToMapIntent);
-                //setContentView(R.layout.activity_maps);
             }
         });
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference countRef = database.getReference("housecount");
-        DatabaseReference listingRef = database.getReference("houses");
-
-        countRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                Long theValue = (Long)snapshot.getValue();
-                countRef.setValue(theValue + 1);
-                Log.d("oncreate addValue:", "the value is " + theValue);
-            }
-            @Override
-            public void onCancelled(DatabaseError firebaseError) {
-                Log.d("oncreate fail", "The read failed: " + firebaseError.getMessage());
-            }
-        });
-
-       // myRef.setValue("Hello, World! 3");
-        String message = countRef.toString();
-        Log.d("end of oncreate", message);
     }
 
 }
