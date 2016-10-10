@@ -47,25 +47,16 @@ public class MapsActivityPresenter {
                //     Object thePrice = (Object)current.get(1);
                //     Object lat = (Object)current.get("lat");
 
-                    String var0 = current.get("lat").toString();
-                    String var1 = current.get("lon").toString();
+                    String var0 = current.get("latitude").toString();
+                    String var1 = current.get("longitude").toString();
                     String var2 = current.get("price").toString();
-                    String var3 = current.get("rooms").toString();
+                    String var3 = current.get("bedrooms").toString();
+
 
                     Float lat = Float.parseFloat(var0);
                     Float lon = Float.parseFloat(var1);
                     int price = Integer.parseInt(var2);
                     int rooms = Integer.parseInt(var3);
-
-                    int sum = rooms + price;
-
-                    Log.d ("lat: ", var0);
-                    Log.d ("lon: ", var1);
-                    Log.d ("price: ", var2);
-                    Log.d ("rooms: ", var3);
-
-                    Log.d ("sum: ", "sum is " + sum);
-
 
                     MarkerOptions toPlace = new MarkerOptions()
                             .position(new LatLng(lat, lon))
@@ -73,9 +64,6 @@ public class MapsActivityPresenter {
                             .snippet(rooms + " rooms, " + price + " per month");
                     view.placeMarker(toPlace);
 
-                  //  Log.d ("hail mary", current.get("price").toString());
-
-                    //Log.d( "current ", current);
                     it.remove();
                 }
 

@@ -14,19 +14,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello Galaxy!"
+        android:layout_marginTop="120dp"
+        android:text="Project Student Housing"
         android:id="@+id/textview1"
+        android:layout_centerHorizontal="true"
+        android:textSize="25sp"
         />
 
     <Button
-        android:text="Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_width="150dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="165dp"
+        android:text="View Map"
         android:id="@+id/button1"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
         android:onClick="buttonOnClick" />
 
 </RelativeLayout>

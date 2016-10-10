@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 String msgString = getResources().getString(R.string.button1msg);
                 CharSequence charSeq = firstTextView.getText();
                 String theString = charSeq.toString();
-                String firstString = "Hello Galaxy!";
+                String firstString = "Hello test!";
                 String secondString = "hellow orld";
 
                 Intent goToMapIntent = new Intent(MainActivity.this, MapsActivity.class);
