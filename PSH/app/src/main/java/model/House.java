@@ -6,5 +6,9 @@ package model;
 
 public class House {
 
-    public String houseName;
+    public String address;
+    public int price;
+    public int count;
+    public double lat;
+    public double lon;
 }

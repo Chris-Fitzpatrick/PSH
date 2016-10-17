@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final Button secondButton = (Button) findViewById(R.id.button2);
+
     }
 
 }

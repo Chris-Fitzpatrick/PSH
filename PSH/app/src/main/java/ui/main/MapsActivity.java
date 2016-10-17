@@ -18,7 +18,7 @@ import ui.main.R;
 public class MapsActivity extends FragmentActivity implements MapsActivityView, OnMapReadyCallback {
 
 
-    private MapsActivityPresenter presenter = new MapsActivityPresenter(this);
+    private MapsActivityPresenter presenter;
     private GoogleMap mMap;
 
     @Override
@@ -26,6 +26,11 @@ public class MapsActivity extends FragmentActivity implements MapsActivityView, 
         Log.d("MapsActivity", "onCreate triggered");
 
         super.onCreate(savedInstanceState);
+
+        if (presenter == null){
+            presenter = new MapsActivityPresenter(this);
+        }
+
         setContentView(R.layout.activity_maps);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.

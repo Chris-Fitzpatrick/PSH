@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import model.House;
+
 
 /**
  * Created by CFitzpatrick on 10/9/16.
@@ -39,29 +41,27 @@ public class MapsActivityPresenter {
                 Log.d("Single Value Listen ***", "got data!");
                 HashMap <String, HashMap> response = (HashMap) dataSnapshot.getValue();
                 Iterator it = response.entrySet().iterator();
+                House currentHouse = new House();
+
                 while (it.hasNext()){
                     HashMap.Entry <String, HashMap> pair = (HashMap.Entry) it.next();
-                    Log.d( "inner sing value loop", pair.getKey() + " = " + pair.getValue());
-
                     HashMap current = pair.getValue();
-               //     Object thePrice = (Object)current.get(1);
-               //     Object lat = (Object)current.get("lat");
 
-                    String var0 = current.get("latitude").toString();
-                    String var1 = current.get("longitude").toString();
-                    String var2 = current.get("price").toString();
-                    String var3 = current.get("bedrooms").toString();
+                    currentHouse.address = pair.getKey();
+                    String latString = current.get("latitude").toString();
+                    String lonString = current.get("longitude").toString();
+                    String priceString = current.get("price").toString();
+                    String countString = current.get("bedrooms").toString();
 
-
-                    Float lat = Float.parseFloat(var0);
-                    Float lon = Float.parseFloat(var1);
-                    int price = Integer.parseInt(var2);
-                    int rooms = Integer.parseInt(var3);
+                    currentHouse.lat = Float.parseFloat(latString);
+                    currentHouse.lon = Float.parseFloat(lonString);
+                    currentHouse.price = Integer.parseInt(priceString);
+                    currentHouse.count = Integer.parseInt(countString);
 
                     MarkerOptions toPlace = new MarkerOptions()
-                            .position(new LatLng(lat, lon))
-                            .title(pair.getKey())
-                            .snippet(rooms + " rooms, " + price + " per month");
+                            .position(new LatLng(currentHouse.lat, currentHouse.lon))
+                            .title(currentHouse.address)
+                            .snippet(currentHouse.count + " rooms, " + currentHouse.price + " per month");
                     view.placeMarker(toPlace);
 
                     it.remove();
@@ -78,8 +78,6 @@ public class MapsActivityPresenter {
             }
         });
 
-
-
         MarkerOptions toPlace = new MarkerOptions()
                 .position(new LatLng(42.408, -71.129))
                 .title("90 Conwell Ave, Apt. 2")
@@ -88,26 +86,3 @@ public class MapsActivityPresenter {
     }
 
 }
-
-
-
-/*    FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference countRef = database.getReference("housecount");
-        DatabaseReference listingRef = database.getReference("houses");
-
-        countRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                Long theValue = (Long)snapshot.getValue();
-                countRef.setValue(theValue + 1);
-                Log.d("oncreate addValue:", "the value is " + theValue);
-            }
-            @Override
-            public void onCancelled(DatabaseError firebaseError) {
-                Log.d("oncreate fail", "The read failed: " + firebaseError.getMessage());
-            }
-        }); */
-
-// myRef.setValue("Hello, World! 3");
-// String message = countRef.toString();
-// Log.d("end of oncreate", message);
