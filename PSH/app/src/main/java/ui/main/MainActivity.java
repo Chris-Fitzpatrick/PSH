@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
         Log.d("onCreate main", "Very beggining of the app");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        int count = 0;
 
         final TextView firstTextView = (TextView) findViewById(R.id.textview1);
 
@@ -31,19 +30,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
 
-                String msgString = getResources().getString(R.string.button1msg);
-                CharSequence charSeq = firstTextView.getText();
-                String theString = charSeq.toString();
-
                 Intent goToMapIntent = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(goToMapIntent);
             }
         });
 
         final Button secondButton = (Button) findViewById(R.id.button2);
+        secondButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                Intent goToFindRegion = new Intent(MainActivity.this, FindRegion.class);
+                startActivity(goToFindRegion);
+            }
+        });
 
         final Button thirdButton = (Button) findViewById(R.id.button3);
+        thirdButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
 
+                Intent goToPostListing = new Intent(MainActivity.this, PostListing.class);
+                startActivity(goToPostListing);
+            }
+        });
     }
 
 }

@@ -33,7 +33,7 @@
     <Button
         android:layout_width="150dp"
         android:layout_height="75dp"
-        android:layout_marginTop="270dp"
+        android:layout_marginTop="245dp"
         android:text="Find Your Perfect Area"
         android:id="@+id/button2"
         android:layout_centerHorizontal="true"
@@ -42,8 +42,8 @@
     <Button
         android:layout_width="150dp"
         android:layout_height="75dp"
-        android:layout_marginTop="270dp"
-        android:text="Post Listing"
+        android:layout_marginTop="325dp"
+        android:text="Post a Listing"
         android:id="@+id/button3"
         android:layout_centerHorizontal="true"
         android:onClick="button3OnClick" />
