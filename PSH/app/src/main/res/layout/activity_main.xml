@@ -25,7 +25,7 @@
         android:layout_width="150dp"
         android:layout_height="75dp"
         android:layout_marginTop="165dp"
-        android:text="View Map"
+        android:text="View Listings"
         android:id="@+id/button1"
         android:layout_centerHorizontal="true"
         android:onClick="buttonOnClick" />
@@ -34,9 +34,19 @@
         android:layout_width="150dp"
         android:layout_height="75dp"
         android:layout_marginTop="270dp"
-        android:text="Optimize Location Tool"
+        android:text="Find Your Perfect Area"
         android:id="@+id/button2"
         android:layout_centerHorizontal="true"
         android:onClick="button2OnClick" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="270dp"
+        android:text="Post Listing"
+        android:id="@+id/button3"
+        android:layout_centerHorizontal="true"
+        android:onClick="button3OnClick" />
+    <!-- TODO: button3OnClickfunction and id -->
 
 </RelativeLayout>

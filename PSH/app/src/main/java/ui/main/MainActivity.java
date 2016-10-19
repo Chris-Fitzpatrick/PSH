@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
                 String msgString = getResources().getString(R.string.button1msg);
                 CharSequence charSeq = firstTextView.getText();
                 String theString = charSeq.toString();
-                String firstString = "Hello test!";
-                String secondString = "hellow orld";
 
                 Intent goToMapIntent = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(goToMapIntent);
@@ -43,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         final Button secondButton = (Button) findViewById(R.id.button2);
+
+        final Button thirdButton = (Button) findViewById(R.id.button3);
 
     }
 
