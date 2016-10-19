@@ -6,4 +6,10 @@ package ui.main;
 
 public class PostListingPresenter {
 
+    private PostListingView view;
+
+    public PostListingPresenter(PostListingView view){
+        this.view = view;
+    }
+
 }

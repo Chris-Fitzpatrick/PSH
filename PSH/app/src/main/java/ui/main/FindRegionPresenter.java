@@ -6,5 +6,10 @@ package ui.main;
 
 public class FindRegionPresenter {
 
+    private FindRegionView view;
+
+    public FindRegionPresenter (FindRegionView view){
+        this.view = view;
+    }
 
 }

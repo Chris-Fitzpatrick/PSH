@@ -16,8 +16,6 @@ import ui.main.R;
 
 
 public class MapsActivity extends FragmentActivity implements MapsActivityView, OnMapReadyCallback {
-
-
     private MapsActivityPresenter presenter;
     private GoogleMap mMap;
 
@@ -41,7 +39,7 @@ public class MapsActivity extends FragmentActivity implements MapsActivityView, 
 
     @Override
     public void onMapReady(GoogleMap map) {
-         mMap = map;
+        mMap = map;
         presenter.findAndPlaceMarkers();
 
     }
