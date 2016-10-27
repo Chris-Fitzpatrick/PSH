@@ -32,6 +32,11 @@ public class FindRegion extends FragmentActivity implements FindRegionView, OnMa
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map3);
         mapFragment.getMapAsync(this);
+
+        Log.d("findregion.java", "about to call the example method");
+        presenter.example();
+        Log.d("findregion.java", "back from the example method");
+
     }
 
     @Override

@@ -23,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView firstTextView = (TextView) findViewById(R.id.textview1);
-
         final Button firstButton = (Button) findViewById(R.id.button1);
         firstButton.setOnClickListener(new View.OnClickListener(){
             @Override

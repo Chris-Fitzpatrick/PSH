@@ -5,4 +5,7 @@ package ui.main;
  */
 
 public interface FindRegionView {
+
+
+
 }

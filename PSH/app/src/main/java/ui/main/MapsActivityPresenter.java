@@ -38,7 +38,6 @@ public class MapsActivityPresenter {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Log.d("Single Value Listen ***", "got data!");
                 HashMap <String, HashMap> response = (HashMap) dataSnapshot.getValue();
                 Iterator it = response.entrySet().iterator();
                 House currentHouse = new House();
@@ -68,13 +67,12 @@ public class MapsActivityPresenter {
                 }
 
                 Set <String> keys = response.keySet();
-
                 response.get(keys.iterator());
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.d("MapsActivityPresenter", "onCancelled: " + databaseError);
             }
         });
 

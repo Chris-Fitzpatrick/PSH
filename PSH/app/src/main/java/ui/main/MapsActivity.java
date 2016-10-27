@@ -19,6 +19,7 @@ public class MapsActivity extends FragmentActivity implements MapsActivityView, 
     private MapsActivityPresenter presenter;
     private GoogleMap mMap;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("MapsActivity", "onCreate triggered");
@@ -35,6 +36,8 @@ public class MapsActivity extends FragmentActivity implements MapsActivityView, 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
     }
 
     @Override
