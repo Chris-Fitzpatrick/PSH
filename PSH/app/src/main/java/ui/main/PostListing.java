@@ -110,6 +110,8 @@ public class PostListing extends FragmentActivity implements PostListingView, On
                             searchAddress.setVisibility(View.GONE);
                             View button4 = findViewById(R.id.button4);
                             button4.setVisibility(View.GONE);
+                            View button5 = findViewById(R.id.button5);
+                            button5.setVisibility(View.VISIBLE);
                 }
 
             }
