@@ -123,7 +123,7 @@ public class PostListing extends FragmentActivity implements PostListingView, On
         final Button submitButton = (Button) findViewById(R.id.button5);
         submitButton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View arg0){
+            public void onClick(View arg0) {
 
                 // convert Edit Text to Integer for all values.
 
@@ -145,9 +145,9 @@ public class PostListing extends FragmentActivity implements PostListingView, On
 
                 DatabaseReference mDatabase;
                 mDatabase = FirebaseDatabase.getInstance().getReference();
-
-
             }
+
+        });
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
