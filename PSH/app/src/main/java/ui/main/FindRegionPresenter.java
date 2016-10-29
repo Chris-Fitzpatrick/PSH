@@ -47,7 +47,6 @@ public class FindRegionPresenter {
         Log.d("ex", "in the example method");
 
         String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=42.403685,-71.120482&destinations=42.401922,-71.116358&mode=walking&language=EN&key=AIzaSyBFSv3d8xFYoL8S8ghfODkbZT8aN4ORo1E";
-        //String url = "https://jsonplaceholder.typicode.com";
 
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue((Context)view);
@@ -94,4 +93,7 @@ public class FindRegionPresenter {
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
+
+
+
 }
