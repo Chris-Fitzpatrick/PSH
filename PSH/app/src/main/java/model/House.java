@@ -11,4 +11,5 @@ public class House {
     public int count;
     public double lat;
     public double lon;
+
 }
