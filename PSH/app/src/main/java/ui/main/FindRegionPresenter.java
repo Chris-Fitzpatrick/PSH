@@ -1,6 +1,5 @@
 package ui.main;
 
-import android.app.DownloadManager;
 import android.content.Context;
 import android.util.Log;
 
@@ -10,7 +9,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.appdatasearch.GetRecentContextCall;
+
 import org.json.*;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class FindRegionPresenter {
         double lon;
     }
 
-    private FindRegionView view;
+    private final FindRegionView view;
     private List<latLong> AreasOfInterest;
 
     public FindRegionPresenter (FindRegionView view){

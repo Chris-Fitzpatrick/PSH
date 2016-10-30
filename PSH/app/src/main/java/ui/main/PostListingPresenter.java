@@ -2,8 +2,6 @@ package ui.main;
 
 import android.util.Log;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -12,6 +10,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import model.Addresses;
@@ -20,7 +19,7 @@ import model.Addresses;
  * Created by CFitzpatrick on 10/19/16.
  */
 
-public class PostListingPresenter {
+class PostListingPresenter {
 
     private PostListingView view;
 
@@ -41,16 +40,15 @@ public class PostListingPresenter {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                HashMap <String, HashMap> response = (HashMap) dataSnapshot.getValue();
-                Iterator it = response.entrySet().iterator();
+                @SuppressWarnings("unchecked") HashMap <String, HashMap> response = (HashMap) dataSnapshot.getValue();
 
                 // figure out variable length of array later,
                 // as well as incorporate Address data model.
                 //String[] addressArray = new String[100];
 
 
-                while (it.hasNext()){
-                    HashMap.Entry <String, HashMap> pair = (HashMap.Entry) it.next();
+                for (Object o : response.entrySet()) {
+                    @SuppressWarnings("unchecked") HashMap.Entry<String, HashMap> pair = (HashMap.Entry) o;
                     addressArray[numHouses] = pair.getKey();
                     numHouses++;
 
