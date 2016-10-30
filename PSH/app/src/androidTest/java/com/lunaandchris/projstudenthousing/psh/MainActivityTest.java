@@ -9,10 +9,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import ui.main.MainActivity;
+import ui.main.R;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.clearText;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 @RunWith(AndroidJUnit4.class)
 /**
@@ -26,6 +30,28 @@ public class MainActivityTest {
     @Test
     public void shouldBeAbleToLaunchMainScreen() {
 
-        onView(withText("Project")).check(ViewAssertions.matches(isDisplayed()));
+        onView(withId(R.id.button3))
+                .check(ViewAssertions.matches(isDisplayed()))
+                .perform(click());
+
+        onView(withId(R.id.searchAddress))
+                .check(ViewAssertions.matches(isDisplayed()))
+                .perform(typeText("Boston Ave"));
+
+        onView(withId(R.id.button4))
+                .check(ViewAssertions.matches(isDisplayed()))
+                .perform(click());
+
+        onView(withId(R.id.searchAddress))
+                .check(ViewAssertions.matches(isDisplayed()))
+                .perform(clearText());
+
+        onView(withId(R.id.searchAddress))
+                .check(ViewAssertions.matches(isDisplayed()))
+                .perform(typeText("Electric Avenue"));
+
+        onView(withId(R.id.button4))
+                .check(ViewAssertions.matches(isDisplayed()))
+                .perform(click());
     }
 }
