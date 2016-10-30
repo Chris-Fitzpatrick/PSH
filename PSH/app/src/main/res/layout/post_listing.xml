@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Post a Listing"
+        android:text="@string/postlisting"
         android:id="@+id/textview1"
         android:layout_centerHorizontal="true"
         android:textSize="25sp"
@@ -28,11 +28,11 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:imeOptions="actionSend"
-        android:hint="Enter an address"
+        android:hint="@string/enteraddress"
         android:id="@+id/searchAddress" />
 
     <Button
-        android:text="CHECK"
+        android:text="@string/check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
@@ -48,7 +48,7 @@
         android:ems="10"
         android:layout_centerHorizontal="true"
         android:imeOptions="actionSend"
-        android:hint="Rent (per person/month)"
+        android:hint="@string/rentperperson"
         android:id="@+id/rent"
         android:visibility="gone"/>
     <EditText
@@ -59,7 +59,7 @@
         android:ems="10"
         android:layout_centerHorizontal="true"
         android:imeOptions="actionSend"
-        android:hint="Number of Bedrooms"
+        android:hint="@string/roomcount"
         android:id="@+id/beds"
         android:visibility="gone"/>
     <EditText
@@ -70,7 +70,7 @@
         android:ems="10"
         android:layout_centerHorizontal="true"
         android:imeOptions="actionSend"
-        android:hint="Lattitude"
+        android:hint="@string/lat"
         android:id="@+id/lattitude"
         android:visibility="gone"/>
     <EditText
@@ -81,12 +81,12 @@
         android:ems="10"
         android:layout_centerHorizontal="true"
         android:imeOptions="actionSend"
-        android:hint="Longitude"
+        android:hint="@string/lon"
         android:id="@+id/longitude"
         android:visibility="gone"/>
 
     <Button
-        android:text="Submit"
+        android:text="@string/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

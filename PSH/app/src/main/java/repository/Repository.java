@@ -1,7 +1,7 @@
 package repository;
 
 import com.google.gson.Gson;
-import java.util.List;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -9,10 +9,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by CFitzpatrick on 10/9/16.
  */
 
-public class Repository {
+class Repository {
 
-    Retrofit retrofit;
-    Gson gson= new Gson();
+    private Retrofit retrofit;
+    private Gson gson= new Gson();
    // APIInterface apiInterface;
 
     public Repository(){

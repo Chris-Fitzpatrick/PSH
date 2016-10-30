@@ -1,7 +1,6 @@
 package ui.main;
 import android.util.Log;
 
-import com.google.android.gms.appinvite.AppInviteInvitation;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -21,9 +20,9 @@ import model.House;
  * Created by CFitzpatrick on 10/9/16.
  */
 
-public class MapsActivityPresenter {
+class MapsActivityPresenter {
 
-    private MapsActivityView view;
+    private final MapsActivityView view;
 
     public MapsActivityPresenter(MapsActivityView view){
         this.view = view;
@@ -38,12 +37,12 @@ public class MapsActivityPresenter {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                HashMap <String, HashMap> response = (HashMap) dataSnapshot.getValue();
+                @SuppressWarnings("unchecked") HashMap <String, HashMap> response = (HashMap) dataSnapshot.getValue();
                 Iterator it = response.entrySet().iterator();
                 House currentHouse = new House();
 
                 while (it.hasNext()){
-                    HashMap.Entry <String, HashMap> pair = (HashMap.Entry) it.next();
+                    @SuppressWarnings("unchecked") HashMap.Entry <String, HashMap> pair = (HashMap.Entry) it.next();
                     HashMap current = pair.getValue();
 
                     currentHouse.address = pair.getKey();
