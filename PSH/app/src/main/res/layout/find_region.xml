@@ -7,8 +7,23 @@
     android:layout_height="match_parent"
     map:cameraTargetLat="42.4075"
     map:cameraTargetLng="-71.1190"
-    map:cameraZoom="15"
-/>
+    map:cameraZoom="15">
+
+    <Button
+    android:layout_height="wrap_content"
+    android:text="@string/calculatetext"
+    android:padding="10dp"
+    android:layout_marginTop="20dp"
+    android:paddingRight="10dp"
+    android:layout_gravity="bottom|center_horizontal"
+    android:layout_width="400dp"
+    android:onClick="calculateClicked"
+    android:id="@+id/calculate"
+    />
+
+</fragment>
+
+
 
 <!--
     tools:context="com.lunaandchris.projstudenthousing.psh.ui.main.FindRegion"

@@ -9,10 +9,23 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.json.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+
+import model.House;
 
 
 /**
@@ -20,6 +33,70 @@ import java.util.List;
  */
 
 public class FindRegionPresenter {
+
+    boolean found = false;
+    protected ArrayList<House> houses = new ArrayList<House>();
+    protected ArrayList<LatLng> places;
+
+    public void calculate() {
+
+        checkForHouses();
+        for (int i = 0; i < houses.size(); i++){
+
+            for (int j = 0; j < places.size(); j++){
+
+            }
+        }
+    }
+
+    private void checkForHouses() {
+        if (found){
+            return;
+        }
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference houseRef = database.getReference("The_Houses");
+
+        houseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                @SuppressWarnings("unchecked") HashMap <String, HashMap> response = (HashMap) dataSnapshot.getValue();
+                Iterator it = response.entrySet().iterator();
+                House currentHouse = new House();
+
+                while (it.hasNext()){
+                    @SuppressWarnings("unchecked") HashMap.Entry <String, HashMap> pair = (HashMap.Entry) it.next();
+                    HashMap current = pair.getValue();
+
+                    currentHouse.address = pair.getKey();
+                    String latString = current.get("latitude").toString();
+                    String lonString = current.get("longitude").toString();
+                    String priceString = current.get("price").toString();
+                    String countString = current.get("bedrooms").toString();
+
+                    currentHouse.lat = Float.parseFloat(latString);
+                    currentHouse.lon = Float.parseFloat(lonString);
+                    currentHouse.price = Integer.parseInt(priceString);
+                    currentHouse.count = Integer.parseInt(countString);
+
+                    Log.d("print: ", "adding house that costs " + currentHouse.price);
+                    houses.add(currentHouse);
+                    it.remove();
+                }
+
+                Set<String> keys = response.keySet();
+                response.get(keys.iterator());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d("MapsActivityPresenter", "onCancelled: " + databaseError);
+            }
+        });
+
+    }
 
     public class latLong{
         double lat;

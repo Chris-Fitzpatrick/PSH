@@ -12,6 +12,8 @@
     <string name="lat">Latitude</string>
     <string name="lon">Longitude</string>
     <string name="submit">Submit</string>
-
-
+    <string name="dialog_fire_missiles">Fire the missles</string>
+    <string name="cancel">Cancel</string>
+    <string name="fire">Fire</string>
+    <string name="calculatetext">Calculate Text</string>
 </resources>
