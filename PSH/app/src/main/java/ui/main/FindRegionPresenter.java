@@ -1,6 +1,7 @@
 package ui.main;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -20,6 +21,8 @@ import com.google.firebase.database.ValueEventListener;
 import org.json.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -38,6 +41,22 @@ public class FindRegionPresenter {
     protected ArrayList<House> houses = new ArrayList<House>();
     protected ArrayList<LatLng> places;
 
+
+
+    public class HouseComparator implements Comparator<House>{
+
+        @Override
+        public int compare(House lhs, House rhs) {
+            if (lhs.meters > rhs.meters){
+                return 1;
+            }
+            if (lhs.meters == rhs.meters){
+                return 0;
+            }
+            return -1;
+        }
+    }
+
     public void calculate() {
 
         checkForHouses();
@@ -46,17 +65,34 @@ public class FindRegionPresenter {
 
         for (int i = 0; i < houses.size(); i++){
             currentHouse = houses.get(i);
-            Log.d("Calculating for: ", currentHouse.address + " cost: " + currentHouse.price);
             float distance = 0;
 
             for (int j = 0; j < places.size(); j++){
 
                 distance += distFrom(currentHouse.lat, currentHouse.lon, places.get(j).latitude, places.get(j).longitude);
             }
-            Log.d("found it to be ", distance + " away \n");
 
+            houses.get(i).meters = distance;
+        }
+        for (int i = 0; i < houses.size(); i++){
+            Log.d("before sort: ", "i: " + i + " is " + houses.get(i).meters);
+        }
+        Collections.sort(houses, new HouseComparator());
+        for (int i = 0; i < houses.size(); i++){
+            Log.d("after sort: ", "i: " + i + " is " + houses.get(i).meters);
+        }
+
+        place1through5();
+    }
+
+    void place1through5(){
+
+        for (int i = 0; i < 5; i++){
+            view.placeHouse(houses.get(i));
         }
     }
+
+
 
     //from http://stackoverflow.com/questions/837872/calculate-distance-in-meters-when-you-know-longitude-and-latitude-in-java
     public static float distFrom(double lat1, double lng1, double lat2, double lng2) {
@@ -78,52 +114,16 @@ public class FindRegionPresenter {
         if (found){
             return;
         }
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference houseRef = database.getReference("The_Houses");
-
-        houseRef.addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                @SuppressWarnings("unchecked") HashMap <String, HashMap> response = (HashMap) dataSnapshot.getValue();
-                Iterator it = response.entrySet().iterator();
-                //House currentHouse = new House();
-
-                while (it.hasNext()){
-                    @SuppressWarnings("unchecked") HashMap.Entry <String, HashMap> pair = (HashMap.Entry) it.next();
-                    HashMap current = pair.getValue();
-                    House currentHouse = new House();
-                    currentHouse.address = pair.getKey();
-                    String latString = current.get("latitude").toString();
-                    String lonString = current.get("longitude").toString();
-                    String priceString = current.get("price").toString();
-                    String countString = current.get("bedrooms").toString();
-
-                    currentHouse.lat = Float.parseFloat(latString);
-                    currentHouse.lon = Float.parseFloat(lonString);
-                    currentHouse.price = Integer.parseInt(priceString);
-                    currentHouse.count = Integer.parseInt(countString);
-
-                    Log.d("print: ", "adding: " + currentHouse.address);
-                    houses.add(currentHouse);
-                    it.remove();
-                }
-                Log.d("print: ", "done getting ");
-                Set<String> keys = response.keySet();
-                response.get(keys.iterator());
-                found = true;
-                Log.d("at: ", "address 5: " + houses.get(5).address + " and " + houses.get(3).address);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d("MapsActivityPresenter", "onCancelled: " + databaseError);
-            }
-        });
+        else {
+            new GetValues().execute();
+        }
 
     }
+
+    public void downloadValues() {
+        new GetValues().execute();
+    }
+
 
     public class latLong{
         double lat;
@@ -138,7 +138,6 @@ public class FindRegionPresenter {
     }
 
 
-
     void addLocation(double lat, double lon){
         latLong toAdd = new latLong();
         toAdd.lat = lat;
@@ -147,7 +146,6 @@ public class FindRegionPresenter {
     }
 
     void example(){
-        Log.d("ex", "in the example method");
 
         String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=42.403685,-71.120482&destinations=42.401922,-71.116358&mode=walking&language=EN&key=AIzaSyBFSv3d8xFYoL8S8ghfODkbZT8aN4ORo1E";
 
@@ -180,5 +178,67 @@ public class FindRegionPresenter {
         });
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+    }
+
+    public class GetValues extends AsyncTask<Void, Void, Void> {
+
+
+        public GetValues() {
+
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference houseRef = database.getReference("The_Houses");
+
+            houseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    @SuppressWarnings("unchecked") HashMap <String, HashMap> response = (HashMap) dataSnapshot.getValue();
+                    Iterator it = response.entrySet().iterator();
+                    //House currentHouse = new House();
+
+                    while (it.hasNext()){
+                        @SuppressWarnings("unchecked") HashMap.Entry <String, HashMap> pair = (HashMap.Entry) it.next();
+                        HashMap current = pair.getValue();
+                        House currentHouse = new House();
+                        currentHouse.address = pair.getKey();
+                        String latString = current.get("latitude").toString();
+                        String lonString = current.get("longitude").toString();
+                        String priceString = current.get("price").toString();
+                        String countString = current.get("bedrooms").toString();
+
+                        currentHouse.lat = Float.parseFloat(latString);
+                        currentHouse.lon = Float.parseFloat(lonString);
+                        currentHouse.price = Integer.parseInt(priceString);
+                        currentHouse.count = Integer.parseInt(countString);
+
+                        houses.add(currentHouse);
+                        it.remove();
+                    }
+                    Set<String> keys = response.keySet();
+                    response.get(keys.iterator());
+                    found = true;
+                    Log.d("async get houses: ", "returning");
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d("MapsActivityPresenter", "onCancelled: " + databaseError);
+                }
+            });
+
+            return null;
+        }
+
     }
 }

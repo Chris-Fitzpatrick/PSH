@@ -56,6 +56,7 @@ public class FindRegion extends FragmentActivity implements FindRegionView, OnMa
         super.onCreate(savedInstanceState);
         if (presenter == null){
             presenter = new FindRegionPresenter(this);
+            triggerDownload();
         }
         if (presenter.places == null){
             presenter.places = new ArrayList<LatLng>();
@@ -96,6 +97,22 @@ public class FindRegion extends FragmentActivity implements FindRegionView, OnMa
     public void calculateClicked(View view){
         Log.d("calculateClicked", "calling presenter method ");
         presenter.calculate();
+    }
+
+    public void triggerDownload(){
+        presenter.downloadValues();
+    }
+
+    public void placeHouse(House toAdd){
+
+        MarkerOptions markerOptions = new MarkerOptions();
+        LatLng latLng = new LatLng(toAdd.lat, toAdd.lon);
+        markerOptions.position(latLng);
+        //markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+        presenter.places.add(latLng);
+        markerOptions.title("marker at " + latLng.latitude + " : " + latLng.longitude);
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.addMarker(markerOptions);
     }
 
 }
