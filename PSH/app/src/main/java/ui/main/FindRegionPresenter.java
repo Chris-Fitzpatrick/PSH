@@ -41,13 +41,38 @@ public class FindRegionPresenter {
     public void calculate() {
 
         checkForHouses();
+        House currentHouse;
+        Log.d("in presenter", "calculating " + houses.size() + " x " + places.size());
+
         for (int i = 0; i < houses.size(); i++){
+            currentHouse = houses.get(i);
+            Log.d("Calculating for: ", currentHouse.address + " cost: " + currentHouse.price);
+            float distance = 0;
 
             for (int j = 0; j < places.size(); j++){
 
+                distance += distFrom(currentHouse.lat, currentHouse.lon, places.get(j).latitude, places.get(j).longitude);
             }
+            Log.d("found it to be ", distance + " away \n");
+
         }
     }
+
+    //from http://stackoverflow.com/questions/837872/calculate-distance-in-meters-when-you-know-longitude-and-latitude-in-java
+    public static float distFrom(double lat1, double lng1, double lat2, double lng2) {
+
+        double earthRadius = 6371000; //meters
+        double dLat = Math.toRadians(lat2-lat1);
+        double dLng = Math.toRadians(lng2-lng1);
+        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+                        Math.sin(dLng/2) * Math.sin(dLng/2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        float dist = (float) (earthRadius * c);
+
+        return dist;
+    }
+
 
     private void checkForHouses() {
         if (found){
@@ -64,12 +89,12 @@ public class FindRegionPresenter {
 
                 @SuppressWarnings("unchecked") HashMap <String, HashMap> response = (HashMap) dataSnapshot.getValue();
                 Iterator it = response.entrySet().iterator();
-                House currentHouse = new House();
+                //House currentHouse = new House();
 
                 while (it.hasNext()){
                     @SuppressWarnings("unchecked") HashMap.Entry <String, HashMap> pair = (HashMap.Entry) it.next();
                     HashMap current = pair.getValue();
-
+                    House currentHouse = new House();
                     currentHouse.address = pair.getKey();
                     String latString = current.get("latitude").toString();
                     String lonString = current.get("longitude").toString();
@@ -81,13 +106,15 @@ public class FindRegionPresenter {
                     currentHouse.price = Integer.parseInt(priceString);
                     currentHouse.count = Integer.parseInt(countString);
 
-                    Log.d("print: ", "adding house that costs " + currentHouse.price);
+                    Log.d("print: ", "adding: " + currentHouse.address);
                     houses.add(currentHouse);
                     it.remove();
                 }
-
+                Log.d("print: ", "done getting ");
                 Set<String> keys = response.keySet();
                 response.get(keys.iterator());
+                found = true;
+                Log.d("at: ", "address 5: " + houses.get(5).address + " and " + houses.get(3).address);
             }
 
             @Override
@@ -138,21 +165,6 @@ public class FindRegionPresenter {
                         try {
                             JSONObject obj = new JSONObject(response);
 
-                            /*
-                            JSONArray array = obj.getJSONArray("rows");
-                            Log.d("printing array: ", array.toString());
-                            JSONObject obj2 = array.getJSONObject(0);
-                            Log.d("printing obj2: ", obj2.toString());
-                            JSONArray obj3 = obj2.getJSONArray("elements");
-                            Log.d("printing obj3: ", obj3.toString());
-                            JSONObject obj4 = obj3.getJSONObject(0);
-                            Log.d("printing obj4: ", obj4.toString());
-                            JSONObject obj5 = obj4.getJSONObject("duration");
-                            Log.d("printing obj5: ", obj5.toString());
-                            int value = obj5.getInt("value");
-                            Log.d("printing value: ", Integer.toString(value));
-                            */
-
                             int walkTime = obj.getJSONArray("rows").getJSONObject(0).getJSONArray("elements").getJSONObject(0).getJSONObject("duration").getInt("value");
                             Log.d("printing walkTime: " , Integer.toString(walkTime));
 
@@ -169,7 +181,4 @@ public class FindRegionPresenter {
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
-
-
-
 }

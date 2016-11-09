@@ -94,7 +94,7 @@ public class FindRegion extends FragmentActivity implements FindRegionView, OnMa
     }
 
     public void calculateClicked(View view){
-
+        Log.d("calculateClicked", "calling presenter method ");
         presenter.calculate();
     }
 
