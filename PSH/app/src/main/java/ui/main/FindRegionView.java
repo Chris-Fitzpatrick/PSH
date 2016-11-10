@@ -9,5 +9,6 @@ import model.House;
 interface FindRegionView {
 
         public void placeHouse(House toAdd);
+        public void clearMarkers();
 
 }

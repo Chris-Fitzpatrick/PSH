@@ -37,10 +37,18 @@ import model.House;
 
 public class FindRegionPresenter {
 
+
+    private final FindRegionView view;
     boolean found = false;
     protected ArrayList<House> houses = new ArrayList<House>();
     protected ArrayList<LatLng> places;
 
+
+    public FindRegionPresenter (FindRegionView view){
+        this.view = view;
+        places = new ArrayList<LatLng>();
+        downloadHouseData();
+    }
 
 
     public class HouseComparator implements Comparator<House>{
@@ -61,32 +69,22 @@ public class FindRegionPresenter {
 
         checkForHouses();
         House currentHouse;
-        Log.d("in presenter", "calculating " + houses.size() + " x " + places.size());
-
         for (int i = 0; i < houses.size(); i++){
             currentHouse = houses.get(i);
             float distance = 0;
 
             for (int j = 0; j < places.size(); j++){
-
                 distance += distFrom(currentHouse.lat, currentHouse.lon, places.get(j).latitude, places.get(j).longitude);
             }
-
             houses.get(i).meters = distance;
         }
-        for (int i = 0; i < houses.size(); i++){
-            Log.d("before sort: ", "i: " + i + " is " + houses.get(i).meters);
-        }
-        Collections.sort(houses, new HouseComparator());
-        for (int i = 0; i < houses.size(); i++){
-            Log.d("after sort: ", "i: " + i + " is " + houses.get(i).meters);
-        }
 
+        Collections.sort(houses, new HouseComparator());
         place1through5();
     }
 
     void place1through5(){
-
+        view.clearMarkers();
         for (int i = 0; i < 5; i++){
             view.placeHouse(houses.get(i));
         }
@@ -117,49 +115,22 @@ public class FindRegionPresenter {
         else {
             new GetValues().execute();
         }
-
     }
 
-    public void downloadValues() {
+    public void downloadHouseData() {
         new GetValues().execute();
     }
 
 
-    public class latLong{
-        double lat;
-        double lon;
-    }
+    void walkingDirections(LatLng start, LatLng dest){
 
-    private final FindRegionView view;
-    private List<latLong> AreasOfInterest;
+        String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins="+start.latitude+","+start.longitude+"&destinations="+dest.latitude+","+start.longitude+"&mode=walking&language=EN&key=AIzaSyBFSv3d8xFYoL8S8ghfODkbZT8aN4ORo1E";
 
-    public FindRegionPresenter (FindRegionView view){
-        this.view = view;
-    }
-
-
-    void addLocation(double lat, double lon){
-        latLong toAdd = new latLong();
-        toAdd.lat = lat;
-        toAdd.lon = lon;
-        AreasOfInterest.add(toAdd);
-    }
-
-    void example(){
-
-        String url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=42.403685,-71.120482&destinations=42.401922,-71.116358&mode=walking&language=EN&key=AIzaSyBFSv3d8xFYoL8S8ghfODkbZT8aN4ORo1E";
-
-        // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue((Context)view);
-
-// Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        Log.d("in success", response);
-
                         try {
                             JSONObject obj = new JSONObject(response);
 
@@ -176,20 +147,15 @@ public class FindRegionPresenter {
                 Log.d("error in request", String.valueOf(error));
             }
         });
-        // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
 
     public class GetValues extends AsyncTask<Void, Void, Void> {
-
-
         public GetValues() {
 
         }
-
         @Override
         protected void onPreExecute() {
-
         }
 
         @Override
@@ -205,22 +171,17 @@ public class FindRegionPresenter {
 
                     @SuppressWarnings("unchecked") HashMap <String, HashMap> response = (HashMap) dataSnapshot.getValue();
                     Iterator it = response.entrySet().iterator();
-                    //House currentHouse = new House();
 
                     while (it.hasNext()){
                         @SuppressWarnings("unchecked") HashMap.Entry <String, HashMap> pair = (HashMap.Entry) it.next();
                         HashMap current = pair.getValue();
                         House currentHouse = new House();
                         currentHouse.address = pair.getKey();
-                        String latString = current.get("latitude").toString();
-                        String lonString = current.get("longitude").toString();
-                        String priceString = current.get("price").toString();
-                        String countString = current.get("bedrooms").toString();
 
-                        currentHouse.lat = Float.parseFloat(latString);
-                        currentHouse.lon = Float.parseFloat(lonString);
-                        currentHouse.price = Integer.parseInt(priceString);
-                        currentHouse.count = Integer.parseInt(countString);
+                        currentHouse.lat = Float.parseFloat(current.get("latitude").toString());
+                        currentHouse.lon = Float.parseFloat(current.get("longitude").toString());
+                        currentHouse.price = Integer.parseInt(current.get("price").toString());
+                        currentHouse.count = Integer.parseInt(current.get("bedrooms").toString());
 
                         houses.add(currentHouse);
                         it.remove();
@@ -228,7 +189,6 @@ public class FindRegionPresenter {
                     Set<String> keys = response.keySet();
                     response.get(keys.iterator());
                     found = true;
-                    Log.d("async get houses: ", "returning");
                 }
 
                 @Override
@@ -236,7 +196,6 @@ public class FindRegionPresenter {
                     Log.d("MapsActivityPresenter", "onCancelled: " + databaseError);
                 }
             });
-
             return null;
         }
 
