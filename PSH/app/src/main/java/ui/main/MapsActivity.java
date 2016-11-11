@@ -9,8 +9,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import ui.main.R;
-
 
 public class MapsActivity extends FragmentActivity implements MapsActivityView, OnMapReadyCallback {
     private MapsActivityPresenter presenter;
@@ -19,7 +17,6 @@ public class MapsActivity extends FragmentActivity implements MapsActivityView, 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("MapsActivity", "onCreate triggered");
 
         super.onCreate(savedInstanceState);
 

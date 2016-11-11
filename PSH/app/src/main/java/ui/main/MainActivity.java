@@ -11,13 +11,10 @@ import io.fabric.sdk.android.Fabric;
 
 import android.util.Log;
 
-import ui.main.R;
-
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("onCreate main", "Very beggining of the app");
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);

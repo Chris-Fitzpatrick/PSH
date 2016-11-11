@@ -45,19 +45,22 @@ class MapsActivityPresenter {
                     @SuppressWarnings("unchecked") HashMap.Entry <String, HashMap> pair = (HashMap.Entry) it.next();
                     HashMap current = pair.getValue();
 
-                    currentHouse.address = pair.getKey();
+                    //currentHouse.address = pair.getKey();
+                    currentHouse.address = "Address not listed";
                     if (current == null){
                         Log.d("current", currentHouse.address + " is null");
                         it.remove();
                         continue;
                     }
-                    currentHouse.address = pair.getKey();
                     if (current.get("latitude") == null || current.get("longitude") == null || current.get("price") == null || current.get("bedrooms") == null){
                         Log.d("onDataChange", "One of the fields of " + currentHouse.address + " is null");
                         it.remove();
                         continue;
                     }
 
+                    if (current.containsKey("address")) {
+                        currentHouse.address = current.get("address").toString();
+                    }
                     currentHouse.lat = Float.parseFloat(current.get("latitude").toString());
                     currentHouse.lon = Float.parseFloat(current.get("longitude").toString());
                     currentHouse.price = Integer.parseInt(current.get("price").toString());

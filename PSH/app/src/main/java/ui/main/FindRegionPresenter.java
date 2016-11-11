@@ -11,7 +11,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -156,6 +155,7 @@ public class FindRegionPresenter {
         }
         @Override
         protected void onPreExecute() {
+
         }
 
         @Override
@@ -190,6 +190,9 @@ public class FindRegionPresenter {
                             continue;
                         }
 
+                        if (current.containsKey("address")) {
+                            currentHouse.address = current.get("address").toString();
+                        }
                         currentHouse.lat = Float.parseFloat(current.get("latitude").toString());
                         currentHouse.lon = Float.parseFloat(current.get("longitude").toString());
                         currentHouse.price = Integer.parseInt(current.get("price").toString());
