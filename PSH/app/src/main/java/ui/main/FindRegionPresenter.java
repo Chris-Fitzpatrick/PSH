@@ -178,6 +178,18 @@ public class FindRegionPresenter {
                         House currentHouse = new House();
                         currentHouse.address = pair.getKey();
 
+                        if (current == null){
+                            Log.d("current", "null value");
+                            it.remove();
+                            continue;
+                        }
+                        currentHouse.address = pair.getKey();
+                        if (current.get("latitude") == null){
+                            Log.d("current.get(lat)", "null value");
+                            it.remove();
+                            continue;
+                        }
+
                         currentHouse.lat = Float.parseFloat(current.get("latitude").toString());
                         currentHouse.lon = Float.parseFloat(current.get("longitude").toString());
                         currentHouse.price = Integer.parseInt(current.get("price").toString());

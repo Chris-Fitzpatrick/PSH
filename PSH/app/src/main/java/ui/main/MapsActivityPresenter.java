@@ -46,6 +46,17 @@ class MapsActivityPresenter {
                     HashMap current = pair.getValue();
 
                     currentHouse.address = pair.getKey();
+                    if (current == null){
+                        Log.d("current", "null value");
+                        it.remove();
+                        continue;
+                    }
+                    currentHouse.address = pair.getKey();
+                    if (current.get("latitude") == null){
+                        Log.d("current.get(lat)", "null value");
+                        it.remove();
+                        continue;
+                    }
                     String latString = current.get("latitude").toString();
                     String lonString = current.get("longitude").toString();
                     String priceString = current.get("price").toString();
