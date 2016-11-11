@@ -177,7 +177,7 @@ public class FindRegionPresenter {
                         HashMap current = pair.getValue();
                         House currentHouse = new House();
                         currentHouse.address = pair.getKey();
-                        Log.d("current house: ", currentHouse.address);
+                        //Log.d("current house: ", currentHouse.address);
                         if (current == null){
                             Log.d("current", currentHouse.address + " is null");
                             it.remove();
@@ -189,7 +189,7 @@ public class FindRegionPresenter {
                             it.remove();
                             continue;
                         }
-                        Log.d("current.get(lat)", current.get("latitude").toString());
+
                         currentHouse.lat = Float.parseFloat(current.get("latitude").toString());
                         currentHouse.lon = Float.parseFloat(current.get("longitude").toString());
                         currentHouse.price = Integer.parseInt(current.get("price").toString());

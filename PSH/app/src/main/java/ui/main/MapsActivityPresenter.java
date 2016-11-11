@@ -47,25 +47,21 @@ class MapsActivityPresenter {
 
                     currentHouse.address = pair.getKey();
                     if (current == null){
-                        Log.d("current", "null value");
+                        Log.d("current", currentHouse.address + " is null");
                         it.remove();
                         continue;
                     }
                     currentHouse.address = pair.getKey();
-                    if (current.get("latitude") == null){
-                        Log.d("current.get(lat)", "null value");
+                    if (current.get("latitude") == null || current.get("longitude") == null || current.get("price") == null || current.get("bedrooms") == null){
+                        Log.d("onDataChange", "One of the fields of " + currentHouse.address + " is null");
                         it.remove();
                         continue;
                     }
-                    String latString = current.get("latitude").toString();
-                    String lonString = current.get("longitude").toString();
-                    String priceString = current.get("price").toString();
-                    String countString = current.get("bedrooms").toString();
 
-                    currentHouse.lat = Float.parseFloat(latString);
-                    currentHouse.lon = Float.parseFloat(lonString);
-                    currentHouse.price = Integer.parseInt(priceString);
-                    currentHouse.count = Integer.parseInt(countString);
+                    currentHouse.lat = Float.parseFloat(current.get("latitude").toString());
+                    currentHouse.lon = Float.parseFloat(current.get("longitude").toString());
+                    currentHouse.price = Integer.parseInt(current.get("price").toString());
+                    currentHouse.count = Integer.parseInt(current.get("bedrooms").toString());
 
                     MarkerOptions toPlace = new MarkerOptions()
                             .position(new LatLng(currentHouse.lat, currentHouse.lon))
