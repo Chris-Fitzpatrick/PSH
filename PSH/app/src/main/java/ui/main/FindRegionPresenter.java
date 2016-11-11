@@ -177,19 +177,19 @@ public class FindRegionPresenter {
                         HashMap current = pair.getValue();
                         House currentHouse = new House();
                         currentHouse.address = pair.getKey();
-
+                        Log.d("current house: ", currentHouse.address);
                         if (current == null){
-                            Log.d("current", "null value");
+                            Log.d("current", currentHouse.address + " is null");
                             it.remove();
                             continue;
                         }
                         currentHouse.address = pair.getKey();
-                        if (current.get("latitude") == null){
-                            Log.d("current.get(lat)", "null value");
+                        if (current.get("latitude") == null || current.get("longitude") == null || current.get("price") == null || current.get("bedrooms") == null){
+                            Log.d("onDataChange", "One of the fields of " + currentHouse.address + " is null");
                             it.remove();
                             continue;
                         }
-
+                        Log.d("current.get(lat)", current.get("latitude").toString());
                         currentHouse.lat = Float.parseFloat(current.get("latitude").toString());
                         currentHouse.lon = Float.parseFloat(current.get("longitude").toString());
                         currentHouse.price = Integer.parseInt(current.get("price").toString());
