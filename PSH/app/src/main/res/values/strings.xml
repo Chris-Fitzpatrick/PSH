@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">PSH</string>
+    <string name="full_app_name">Project Student Housing</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="viewlistings">View Listings</string>
+    <string name="findarea">Find Your Perfect Area</string>
+    <string name="enteraddress">Enter an Address</string>
+    <string name="check">Check</string>
+    <string name="postlisting">Post a Listing</string>
+    <string name="rentperperson">Rent (per person/month)</string>
+    <string name="roomcount">Number of Bedrooms</string>
+    <string name="lat">Latitude</string>
+    <string name="lon">Longitude</string>
+    <string name="submit">Submit</string>
+    <string name="dialog_fire_missiles">Fire the missles</string>
+    <string name="cancel">Cancel</string>
+    <string name="fire">Fire</string>
+    <string name="calculatetext">Calculate</string>
+</resources>
