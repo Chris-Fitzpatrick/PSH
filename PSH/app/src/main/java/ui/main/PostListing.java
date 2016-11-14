@@ -16,6 +16,7 @@ import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.common.data.DataBufferObserverSet;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
@@ -66,28 +67,17 @@ public class PostListing extends FragmentActivity implements PostListingView {
         PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
 
-        autocompleteFragment.setBoundsBias(new LatLngBounds(
-                new LatLng(42.372872, -71.149579),
-                new LatLng(42.425860, -71.075936)));
+        AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
+                .build();
 
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                //Log.d(TAG, "Place: " + place.getName());
-            }
+        autocompleteFragment.setFilter(typeFilter);
 
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-               // Log.d(TAG, "An error occurred: " + status);
-            }
-        });
+        autocompleteFragment
+                .setBoundsBias(new LatLngBounds(
+                    new LatLng(42.372872, -71.149579),
+                    new LatLng(42.425860, -71.075936)));
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        //MapFragment mapFragment = (MapFragment) getFragmentManager()
-        //      .findFragmentById(R.id.map3);
-        //mapFragment.getMapAsync(this);
 
         final EditText editText = (EditText) findViewById(R.id.searchAddress);
         final EditText rentText = (EditText) findViewById(R.id.rent);
@@ -95,19 +85,18 @@ public class PostListing extends FragmentActivity implements PostListingView {
         final EditText latText = (EditText) findViewById(R.id.lattitude);
         final EditText longText = (EditText) findViewById(R.id.longitude);
 
-        final Button checkButton = (Button) findViewById(R.id.button4);
-        checkButton.setOnClickListener(new View.OnClickListener(){
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
-            public void onClick(View arg0){
+            public void onPlaceSelected(Place place) {
 
-                String inputAddress = editText.getText().toString();
+                String inputAddress = place.getName().toString();
                 String modAddress = inputAddress.replaceAll("\\W", "");
                 modAddress = modAddress.toLowerCase();
 
                 boolean addressExists = false;
 
                 for (int i = 0; i < (presenter.numHouses); i++) {
-
+                    //TODO: rewrite duplicate check logic
                     String currentAddress = presenter.addressArray[i].replaceAll("\\W", "");
                     currentAddress = currentAddress.toLowerCase();
 
@@ -126,24 +115,41 @@ public class PostListing extends FragmentActivity implements PostListingView {
                             //editText.getText(),
                             inputAddress + " is not a listing, you're good to go!",
                             Toast.LENGTH_SHORT).show();
-                    View rent = findViewById(R.id.rent);
-                    rent.setVisibility(View.VISIBLE);
-                    View beds = findViewById(R.id.beds);
-                    beds.setVisibility(View.VISIBLE);
                     View lattitude = findViewById(R.id.lattitude);
                     lattitude.setVisibility(View.VISIBLE);
                     View longitude = findViewById(R.id.longitude);
                     longitude.setVisibility(View.VISIBLE);
-                    View button4 = findViewById(R.id.button4);
-                    button4.setVisibility(View.GONE);
                     View button5 = findViewById(R.id.button5);
                     button5.setVisibility(View.VISIBLE);
 
+                    String latLong = place.getLatLng().toString().replace("lat/lng: (","").replace(")", "");
+
+                    String[] latlon =  latLong.split(",");
+                    String lat = latlon[0];
+                    String lon = latlon[1];
+
+                    latText.setText(lat);
+                    longText.setText(lon);
+
                     postListing.address = inputAddress;
+
                 }
 
             }
+
+            @Override
+            public void onError(Status status) {
+
+                Toast.makeText(getApplicationContext(),
+                        ("We're sorry, an error occurred: " + status),
+                        Toast.LENGTH_SHORT).show();
+            }
         });
+
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        //MapFragment mapFragment = (MapFragment) getFragmentManager()
+        //      .findFragmentById(R.id.map3);
+        //mapFragment.getMapAsync(this);
 
         final Button submitButton = (Button) findViewById(R.id.button5);
         submitButton.setOnClickListener(new View.OnClickListener(){
@@ -153,24 +159,30 @@ public class PostListing extends FragmentActivity implements PostListingView {
                 // convert Edit Text to Integer for all values.
 
                 postListing.bedrooms= bedsText.getText().toString().replaceAll("\\W", "");
-
                 postListing.price = rentText.getText().toString().replaceAll("\\W", "");
+                postListing.latitude = latText.getText().toString();
+                postListing.longitude = longText.getText().toString();
 
-                postListing.latitude = latText.getText().toString().replaceAll("\\W", "");
 
-                postListing.longitude = longText.getText().toString().replaceAll("\\W", "");
+                if (!(postListing.address.isEmpty())) {
+                    if (!(postListing.bedrooms.isEmpty())) {
+                        if (!(postListing.price.isEmpty())) {
+                            if (!(postListing.latitude.isEmpty())) {
+                                if (!(postListing.longitude.isEmpty())) {
+                                    DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("The_Houses");
+                                    mDatabase.push().setValue(postListing);
 
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("The_Houses");
+                                    Intent goToMainIntent = new Intent(PostListing.this, MainActivity.class);
+                                    startActivity(goToMainIntent);
 
-                mDatabase.push().setValue(postListing);
-
-                Intent goToMainIntent = new Intent(PostListing.this, MainActivity.class);
-                startActivity(goToMainIntent);
-
-                Toast.makeText(getApplicationContext(),
-                        "Listing successfully posted",
-                        Toast.LENGTH_SHORT).show();
-
+                                    Toast.makeText(getApplicationContext(),
+                                            "Listing successfully posted",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+                    }
+                }
 
             }
 
