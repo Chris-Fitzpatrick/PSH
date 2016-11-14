@@ -14,10 +14,16 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.common.data.DataBufferObserverSet;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -52,6 +58,31 @@ public class PostListing extends FragmentActivity implements PostListingView {
 
         presenter.extractAddresses();
         setContentView(R.layout.post_listing);
+
+        // get rid of search address all together upon finishing
+        View searchAddress = findViewById(R.id.searchAddress);
+        searchAddress.setVisibility(View.GONE);
+
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        autocompleteFragment.setBoundsBias(new LatLngBounds(
+                new LatLng(42.372872, -71.149579),
+                new LatLng(42.425860, -71.075936)));
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                //Log.d(TAG, "Place: " + place.getName());
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+               // Log.d(TAG, "An error occurred: " + status);
+            }
+        });
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         //MapFragment mapFragment = (MapFragment) getFragmentManager()
@@ -103,8 +134,6 @@ public class PostListing extends FragmentActivity implements PostListingView {
                     lattitude.setVisibility(View.VISIBLE);
                     View longitude = findViewById(R.id.longitude);
                     longitude.setVisibility(View.VISIBLE);
-                    View searchAddress = findViewById(R.id.searchAddress);
-                    searchAddress.setVisibility(View.GONE);
                     View button4 = findViewById(R.id.button4);
                     button4.setVisibility(View.GONE);
                     View button5 = findViewById(R.id.button5);
