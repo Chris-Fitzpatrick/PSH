@@ -76,7 +76,7 @@ public class PostListing extends FragmentActivity implements PostListingView {
         autocompleteFragment
                 .setBoundsBias(new LatLngBounds(
                     new LatLng(42.372872, -71.149579),
-                    new LatLng(42.425860, -71.075936)));
+                    new LatLng(42.425860, -71.075935)));
 
 
         final EditText editText = (EditText) findViewById(R.id.searchAddress);

@@ -1,14 +1,7 @@
 <resources>
-    <!--
-    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=F4:AB:81:21:68:D0:71:49:FD:10:90:7A:49:6E:6E:87:A7:8C:4A:F5%3Bcom.lunaandchris.projstudenthousing.psh
 
-    You can also add your credentials to an existing key, using this line:
-    F4:AB:81:21:68:D0:71:49:FD:10:90:7A:49:6E:6E:87:A7:8C:4A:F5;com.lunaandchris.projstudenthousing.psh
-
-    https://developers.google.com/maps/documentation/android/start#get-key
-
-    -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        AIzaSyDI5ER0YwZhqBKHzeryi_kPskFfV_QYf7k
+        AIzaSyBlGT7JnGMW-SdaOb9uADu6o3AKe4j4TXg
+
     </string>
 </resources>
